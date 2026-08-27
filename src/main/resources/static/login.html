@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entrar | EduSpace</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<main class="login-page">
+    <section class="login-card">
+        <div class="identity">
+            <span class="logo">E</span>
+            <div>
+                <h1>EduSpace</h1>
+                <p>Gestão de ambientes de ensino</p>
+            </div>
+        </div>
+
+        <div class="heading">
+            <h2>Bem-vindo</h2>
+            <p>Informe seus dados para acessar o sistema.</p>
+        </div>
+
+        <p class="message error" id="error">Usuário ou senha inválidos.</p>
+        <p class="message success" id="logout">Sessão encerrada com sucesso.</p>
+
+        <form action="/login" method="post">
+            <label for="username">Usuário</label>
+            <input id="username" name="username" type="text" autocomplete="username" autofocus required>
+
+            <label for="password">Senha</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+    </section>
+</main>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('erro')) document.getElementById('error').classList.add('visible');
+    if (params.has('sair')) document.getElementById('logout').classList.add('visible');
+</script>
+</body>
+</html>

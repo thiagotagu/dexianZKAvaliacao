@@ -1,0 +1,76 @@
+<zk>
+    <div viewModel="@id('vm') @init('com.educzk.viewmodel.OcupacaoViewModel')">
+        <div sclass="page-head">
+            <label value="Visão geral" sclass="page-title"/>
+            <label value="Acompanhe quem está utilizando cada espaço." sclass="page-description"/>
+        </div>
+
+        <div sclass="entry-card">
+            <label value="Registrar entrada" sclass="section-title"/>
+            <hlayout sclass="form-row" valign="bottom">
+                <vlayout>
+                    <label value="Aluno" sclass="field-label"/>
+                    <combobox width="280px" placeholder="Digite o nome ou matrícula" autodrop="true"
+                              autocomplete="true" model="@load(vm.alunosDisponiveis)"
+                              selectedItem="@bind(vm.alunoEntrada)">
+                        <template name="model">
+                            <comboitem label="@load(each.nome.concat(' · ').concat(each.matricula))"
+                                       value="@load(each)"/>
+                        </template>
+                    </combobox>
+                </vlayout>
+                <vlayout>
+                    <label value="Ambiente" sclass="field-label"/>
+                    <combobox width="280px" placeholder="Digite o nome do ambiente" autodrop="true"
+                              autocomplete="true" model="@load(vm.ambientes)"
+                              selectedItem="@bind(vm.ambienteEntrada)">
+                        <template name="model">
+                            <comboitem label="@load(each.nome.concat(' · ').concat(each.tipo.descricao))"
+                                       value="@load(each)"/>
+                        </template>
+                    </combobox>
+                </vlayout>
+                <button label="Registrar entrada" iconSclass="z-icon-sign-in"
+                        onClick="@command('registrarEntrada')" sclass="primary"/>
+            </hlayout>
+        </div>
+
+        <label value="Ocupação dos ambientes" sclass="section-title block"/>
+        <div sclass="cards" children="@load(vm.ocupacoes)">
+            <template name="children">
+                <div sclass="occupancy-card">
+                    <label value="@load(each.ambiente.nome)" sclass="card-title"/>
+                    <label value="@load(each.ambiente.tipo.descricao)" sclass="muted"/>
+                    <hlayout sclass="metric">
+                        <label value="@load(each.resumo)" sclass="metric-number"/>
+                        <label value="pessoas" sclass="muted"/>
+                    </hlayout>
+                    <progressmeter value="@load(each.percentual)" width="100%"/>
+                    <label value="@load(each.percentualTexto)" sclass="tiny"/>
+                </div>
+            </template>
+        </div>
+
+        <label value="Presenças ativas" sclass="section-title block"/>
+        <listbox model="@load(vm.presencas)" mold="paging" pageSize="5"
+                 emptyMessage="Nenhum aluno presente no momento." sclass="data-list">
+            <listhead>
+                <listheader label="Aluno"/>
+                <listheader label="Ambiente"/>
+                <listheader label="Entrada" width="190px"/>
+                <listheader label="" width="70px" align="center"/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.aluno.nome)"/>
+                    <listcell label="@load(each.ambiente.nome)"/>
+                    <listcell label="@load(vm.formatar(each.entrada))"/>
+                    <listcell>
+                        <button iconSclass="z-icon-sign-out" tooltiptext="Registrar saída"
+                                onClick="@command('registrarSaida', item=each)" sclass="icon-action danger"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </div>
+</zk>

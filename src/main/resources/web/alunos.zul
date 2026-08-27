@@ -1,0 +1,29 @@
+<zk>
+    <div viewModel="@id('vm') @init('com.educzk.viewmodel.AlunoViewModel')">
+        <div sclass="page-head">
+            <label value="Alunos" sclass="page-title"/>
+            <label value="Cadastre e mantenha os dados dos alunos." sclass="page-description"/>
+        </div>
+
+        <div sclass="entry-card">
+            <label value="@load(empty vm.aluno.id ? 'Novo aluno' : 'Editar aluno')" sclass="section-title"/>
+            <hlayout sclass="form-row" valign="bottom">
+                <vlayout><label value="Nome" sclass="field-label"/><textbox value="@bind(vm.aluno.nome)" width="250px" maxlength="120"/></vlayout>
+                <vlayout><label value="Matrícula" sclass="field-label"/><textbox value="@bind(vm.aluno.matricula)" width="160px" maxlength="30"/></vlayout>
+                <vlayout><label value="E-mail" sclass="field-label"/><textbox value="@bind(vm.aluno.email)" width="250px" maxlength="150"/></vlayout>
+                <button label="Salvar" onClick="@command('salvar')" sclass="primary"/>
+                <button label="Cancelar" onClick="@command('cancelar')" visible="@load(not empty vm.aluno.id)"/>
+            </hlayout>
+        </div>
+
+        <listbox model="@load(vm.alunos)" emptyMessage="Nenhum aluno cadastrado." sclass="data-list">
+            <listhead><listheader label="Nome"/><listheader label="Matrícula"/><listheader label="E-mail"/><listheader label="Ações" width="150px"/></listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.nome)"/><listcell label="@load(each.matricula)"/><listcell label="@load(each.email)"/>
+                    <listcell><hlayout><button iconSclass="z-icon-pencil" tooltiptext="Editar" onClick="@command('editar', item=each)"/><button iconSclass="z-icon-trash" tooltiptext="Excluir" onClick="@command('excluir', item=each)"/></hlayout></listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </div>
+</zk>

@@ -1,0 +1,29 @@
+<zk>
+    <div viewModel="@id('vm') @init('com.educzk.viewmodel.AmbienteViewModel')">
+        <div sclass="page-head">
+            <label value="Ambientes" sclass="page-title"/>
+            <label value="Configure os espaços e suas capacidades." sclass="page-description"/>
+        </div>
+
+        <div sclass="entry-card">
+            <label value="@load(empty vm.ambiente.id ? 'Novo ambiente' : 'Editar ambiente')" sclass="section-title"/>
+            <hlayout sclass="form-row" valign="bottom">
+                <vlayout><label value="Nome" sclass="field-label"/><textbox value="@bind(vm.ambiente.nome)" width="260px" maxlength="100"/></vlayout>
+                <vlayout><label value="Tipo" sclass="field-label"/><combobox width="200px" readonly="true" model="@load(vm.tipos)" selectedItem="@bind(vm.ambiente.tipo)"><template name="model"><comboitem label="@load(each.descricao)"/></template></combobox></vlayout>
+                <vlayout><label value="Capacidade" sclass="field-label"/><intbox value="@bind(vm.ambiente.capacidade)" width="110px" constraint="no negative,no zero"/></vlayout>
+                <button label="Salvar" onClick="@command('salvar')" sclass="primary"/>
+                <button label="Cancelar" onClick="@command('cancelar')" visible="@load(not empty vm.ambiente.id)"/>
+            </hlayout>
+        </div>
+
+        <listbox model="@load(vm.ambientes)" emptyMessage="Nenhum ambiente cadastrado." sclass="data-list">
+            <listhead><listheader label="Nome"/><listheader label="Tipo"/><listheader label="Capacidade"/><listheader label="Ações" width="150px"/></listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.nome)"/><listcell label="@load(each.tipo.descricao)"/><listcell label="@load(each.capacidade)"/>
+                    <listcell><hlayout><button iconSclass="z-icon-pencil" tooltiptext="Editar" onClick="@command('editar', item=each)"/><button iconSclass="z-icon-trash" tooltiptext="Excluir" onClick="@command('excluir', item=each)"/></hlayout></listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </div>
+</zk>

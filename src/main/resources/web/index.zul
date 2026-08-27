@@ -1,0 +1,35 @@
+<?page title="EduSpace" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/app.css"?>
+<zk>
+    <div sclass="app-shell">
+        <div sclass="topbar">
+            <div>
+                <label value="EduSpace" sclass="brand"/>
+                <label value="Gestão de ambientes de ensino" sclass="subtitle"/>
+            </div>
+            <hlayout valign="middle" spacing="10px">
+                <label value="Ocupação em tempo real" sclass="status"/>
+                <button label="Sair" iconSclass="z-icon-sign-out" href="/logout" sclass="logout-button"/>
+            </hlayout>
+        </div>
+
+        <tabbox sclass="main-tabs">
+            <tabs>
+                <tab label="Visão geral"/>
+                <tab label="Alunos"/>
+                <tab label="Ambientes"/>
+            </tabs>
+            <tabpanels>
+                <tabpanel>
+                    <include src="/zkau/web/ocupacao.zul" mode="defer"/>
+                </tabpanel>
+                <tabpanel>
+                    <include src="/zkau/web/alunos.zul" mode="defer"/>
+                </tabpanel>
+                <tabpanel>
+                    <include src="/zkau/web/ambientes.zul" mode="defer"/>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </div>
+</zk>
